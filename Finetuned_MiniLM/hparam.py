@@ -21,5 +21,5 @@ input_dim = 384
 hdn_dims = input_dim // 2 # todo
 
 # Train conf
-epochs = 100
+epochs = 10
 lr = 1e-4

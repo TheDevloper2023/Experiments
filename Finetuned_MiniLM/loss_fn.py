@@ -18,25 +18,20 @@ class BinaryFocalLoss(nn.Module):
 
 
 
-# Focal fixes some problems with co-occurence (allowes sad but happy and so on) but is a bit nosiy
-# BCE has issues but is somewhat sharper
-# What if I combine it?
+# I ask deepseek about fixing some predictions where I need happy and sad at the same time.
+# The Co-occurrence Penalty (Interspeech 2022) fixes he said
 
 
-class BCEFocalMixed(nn.Module):
-    def __init__(self, gamma=1.0, alpha=0.5):
-        super().__init__()
-        self.gamma = gamma
-        self.alpha = alpha
-    
-    def forward(self, logits, targets):
-        # Standard BCE
-        bce = F.binary_cross_entropy_with_logits(logits, targets, reduction='none')
-        
-        # Focal = BCE × (1 - p_t)^gamma
-        p = torch.sigmoid(logits)
-        pt = targets * p + (1 - targets) * (1 - p)
-        focal = (1 - pt).pow(self.gamma) * bce
-        
-        return (self.alpha * bce + (1 - self.alpha) * focal).mean()
-    
+def compute_cooccurrence_matrix(Y, eps=1e-6):
+    """Y: (N, C) labels. Returns (C, C) matrix of P(j|i)."""
+    Y_bin = (Y > 0.5).float()
+    co_pos = Y_bin.T @ Y_bin
+    pos_counts = Y_bin.sum(0)
+    return co_pos / (pos_counts.unsqueeze(1) + eps)
+
+def cooccurrence_penalty(logits, true_cooc_matrix, eps=1e-6):
+    """Penalizes deviation from true co-occurrence structure."""
+    probs = torch.sigmoid(logits)
+    probs_norm = probs / (probs.sum(0, keepdim=True) + eps)
+    batch_cooc = probs.T @ probs_norm
+    return F.mse_loss(batch_cooc, true_cooc_matrix)
