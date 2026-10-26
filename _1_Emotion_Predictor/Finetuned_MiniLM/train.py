@@ -3,11 +3,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # load model
-from model import EmotionClassifierHybrid
+from _1_Emotion_Predictor.Finetuned_MiniLM.model import EmotionClassifierHybrid
 from torch.utils.data import TensorDataset, DataLoader, random_split
-from dataset import TextDataset, collate
-import hparam as hp
-from loss_fn import BinaryFocalLoss, compute_cooccurrence_matrix, cooccurrence_penalty
+from _1_Emotion_Predictor.Finetuned_MiniLM.dataset import TextDataset, collate
+import _1_Emotion_Predictor.Finetuned_MiniLM.hparam as hp
+from _1_Emotion_Predictor.Finetuned_MiniLM.loss_fn import BinaryFocalLoss, compute_cooccurrence_matrix, cooccurrence_penalty
 from transformers import AutoTokenizer
 tokenizer = AutoTokenizer.from_pretrained(hp.MODEL)
 
@@ -126,7 +126,7 @@ for i in range(hp.epochs):
         torch.save(model.state_dict(), f'saved/emotion_head_best_{i}_new_loss.pt')
     else:
             print('✗ val diverged — stopping')
-            break
+            pass
         
 
 

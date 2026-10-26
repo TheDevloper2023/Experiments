@@ -3,10 +3,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # load model
-from model import EmotionClassifierV1, EmotionClassifierV2, EmotionClassifierHybrid
+from _1_Emotion_Predictor.Frozen_MiniLM.model import EmotionClassifierV1, EmotionClassifierV2, EmotionClassifierHybrid
 from torch.utils.data import TensorDataset, DataLoader, random_split
-import hparam as hp
-from loss_fn import BinaryFocalLoss, BCEFocalMixed
+import _1_Emotion_Predictor.Frozen_MiniLM.hparam as hp
+from _1_Emotion_Predictor.Frozen_MiniLM.loss_fn import BinaryFocalLoss, BCEFocalMixed
 
 device = "cuda"
 

@@ -7,7 +7,7 @@ Usage:
 """
 import sys
 import torch
-import hparam as hp
+import _1_Emotion_Predictor.Frozen_MiniLM.hparam as hp
 
 
 def analyze(blob_path='minilm_eqn.pt', 

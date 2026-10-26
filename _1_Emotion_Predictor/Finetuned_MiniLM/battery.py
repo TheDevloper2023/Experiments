@@ -10,9 +10,9 @@ import sys
 import os
 from pathlib import Path
 import torch
-import hparam as hp
+import _1_Emotion_Predictor.Finetuned_MiniLM.hparam as hp
 
-from model import EmotionClassifierHybrid
+from _1_Emotion_Predictor.Finetuned_MiniLM.model import EmotionClassifierHybrid
 from transformers import AutoTokenizer
 
 

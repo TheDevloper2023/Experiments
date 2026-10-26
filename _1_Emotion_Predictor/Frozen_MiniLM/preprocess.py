@@ -4,7 +4,7 @@ Preprocesses everything for the model
 import csv
 import torch
 from transformers import AutoTokenizer, AutoModel
-import hparam as hp
+import _1_Emotion_Predictor.Frozen_MiniLM.hparam as hp
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 tokenizer = AutoTokenizer.from_pretrained(hp.MODEL)

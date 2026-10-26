@@ -59,7 +59,7 @@ class EmotionClassifierHybrid(nn.Module):
 
 # Vibecode the test
 if __name__ == "__main__":
-    import hparam as hp
+    import _1_Emotion_Predictor.Finetuned_MiniLM.hparam as hp
 
     MODEL = "sentence-transformers/all-MiniLM-L6-v2"
     tokenizer = AutoTokenizer.from_pretrained(MODEL)

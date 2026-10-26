@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import hparam as hp
+import _1_Emotion_Predictor.Frozen_MiniLM.hparam as hp
 
 class EmotionClassifierV1(nn.Module):
     """
